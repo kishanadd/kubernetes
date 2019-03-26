@@ -31,16 +31,25 @@ $$#####kubelet=1.12.2-00 kubeadm=1.12.2-00 kubectl=1.12.2-00 *** not working now
 
 sudo apt-get install kubeadm=1.13.4-00 kubelet=1.13.4-00 kubectl=1.13.4-00 kubernetes-cni=0.6.0-00
 
+lock auto updates :
 
 sudo apt-mark hold docker-ce kubelet kubeadm kubectl
 
+
+
 Enable net.bridge.bridge-nf-call-iptables on all three nodes.
+
+
+
 echo "net.bridge.bridge-nf-call-iptables=1" | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
 
 On only the Kube Master server, initialize the cluster and configure kubectl.
 
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+
+create kube ctl for connections 
+
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
